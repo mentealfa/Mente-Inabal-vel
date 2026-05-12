@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mente Inabalável</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000;
+      font-family: sans-serif;
+    }
+
+    .page-image {
+      width: 100%;
+      display: block;
+    }
+
+    /* Botão de CTA flutuante (opcional) */
+    .cta-fixo {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f5a623;
+      color: #000;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 16px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      text-align: center;
+      box-shadow: 0 4px 30px rgba(245, 166, 35, 0.6);
+      z-index: 999;
+      white-space: nowrap;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .cta-fixo:hover {
+      transform: translateX(-50%) scale(1.05);
+      box-shadow: 0 6px 40px rgba(245, 166, 35, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Imagem da página inteira hospedada no GitHub -->
+  <img
+    class="page-image"
+    src="https://github.com/mentealfa/Mente-Inabal-vel/blob/main/O%20DIAGNOSTICO%20REAL.png?raw=true"
+    alt="Mente Inabalável"
+  />
+
+  <!-- Botão fixo de compra (edite o link href) -->
+  <a class="cta-fixo" href="#" target="_blank">
+    QUERO ACESSAR AGORA →
+  </a>
+
+</body>
+</html>
