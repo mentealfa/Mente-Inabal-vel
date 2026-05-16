@@ -10,26 +10,316 @@
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       background-color: #000;
       font-family: sans-serif;
     }
-
     .page-image {
       width: 100%;
       display: block;
+    }
+
+    /* ─────────────────────────────────────────
+       WRAPPER — ancora os overlays na imagem
+    ───────────────────────────────────────── */
+    .page-wrapper {
+      position: relative;
+      width: 100%;
+      display: block;
+    }
+
+    /* ─────────────────────────────────────────
+       OVERLAY BASE
+    ───────────────────────────────────────── */
+    .btn-overlay {
+      position: absolute;
+      cursor: pointer;
+      pointer-events: auto;
+      overflow: visible;
+      z-index: 10;
+    }
+
+    /* ─────────────────────────────────────────
+       DEBUG — adicione ?debug na URL para ver
+       os contornos vermelhos de cada overlay
+    ───────────────────────────────────────── */
+    .debug .btn-overlay {
+      outline: 2px solid #ff003c;
+      background: rgba(255, 0, 60, 0.18);
+    }
+    .debug .btn-overlay::after {
+      content: attr(data-label);
+      position: absolute;
+      top: -18px;
+      left: 0;
+      font-size: 10px;
+      color: #ff003c;
+      white-space: nowrap;
+      font-family: monospace;
+      background: rgba(0,0,0,0.75);
+      padding: 1px 4px;
+      border-radius: 2px;
+    }
+
+    /* ─────────────────────────────────────────
+       EFEITO 1 — SHIMMER (reflexo dourado)
+    ───────────────────────────────────────── */
+    .fx-shimmer {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        108deg,
+        transparent 35%,
+        rgba(255, 210, 60, 0.55) 50%,
+        rgba(255, 255, 180, 0.30) 55%,
+        transparent 65%
+      );
+      background-size: 250% 100%;
+      animation: shimmerSweep 2.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes shimmerSweep {
+      0%   { background-position: -200% 0; }
+      60%  { background-position:  200% 0; }
+      100% { background-position:  200% 0; }
+    }
+
+    /* ─────────────────────────────────────────
+       EFEITO 2 — GLOW PULSE dourado
+    ───────────────────────────────────────── */
+    .fx-glow {
+      position: absolute;
+      inset: -3px;
+      border-radius: inherit;
+      animation: glowPulse 2.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes glowPulse {
+      0%,100% { box-shadow: 0 0  6px  3px rgba(255,180,  0, 0.40); }
+      50%     { box-shadow: 0 0 28px  8px rgba(255,200,  0, 0.90); }
+    }
+
+    /* ─────────────────────────────────────────
+       EFEITO 3 — GLOW PULSE laranja
+    ───────────────────────────────────────── */
+    .fx-glow-orange {
+      position: absolute;
+      inset: -3px;
+      border-radius: inherit;
+      animation: glowPulseOrange 2.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes glowPulseOrange {
+      0%,100% { box-shadow: 0 0  6px  3px rgba(255,100,0, 0.45); }
+      50%     { box-shadow: 0 0 30px  8px rgba(255,130,0, 0.95); }
+    }
+
+    /* ─────────────────────────────────────────
+       EFEITO 4 — PULSE RINGS dourado
+    ───────────────────────────────────────── */
+    .fx-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: inherit;
+      border: 2px solid rgba(255,185,0, 0.70);
+      animation: pulseRing 2.4s ease-out infinite;
+      pointer-events: none;
+    }
+    .fx-ring:nth-of-type(2) { animation-delay: 0.80s; }
+    .fx-ring:nth-of-type(3) { animation-delay: 1.60s; }
+    @keyframes pulseRing {
+      0%   { transform: scale(1.00); opacity: 0.85; }
+      100% { transform: scale(1.20); opacity: 0.00; }
+    }
+
+    /* ─────────────────────────────────────────
+       EFEITO 5 — PULSE RINGS laranja
+    ───────────────────────────────────────── */
+    .fx-ring-orange {
+      position: absolute;
+      inset: -4px;
+      border-radius: inherit;
+      border: 2px solid rgba(255,110,0, 0.75);
+      animation: pulseRingOrange 2.4s ease-out infinite;
+      pointer-events: none;
+    }
+    .fx-ring-orange:nth-of-type(2) { animation-delay: 0.80s; }
+    .fx-ring-orange:nth-of-type(3) { animation-delay: 1.60s; }
+    @keyframes pulseRingOrange {
+      0%   { transform: scale(1.00); opacity: 0.85; }
+      100% { transform: scale(1.22); opacity: 0.00; }
+    }
+
+    /* ─────────────────────────────────────────
+       EFEITO 6 — BORDER GLOW animado
+    ───────────────────────────────────────── */
+    .fx-border {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1.5px solid transparent;
+      animation: borderAnim 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes borderAnim {
+      0%,100% {
+        border-color: rgba(255,200,0, 0.25);
+        box-shadow: inset 0 0  8px rgba(255,200,0, 0.08);
+      }
+      50% {
+        border-color: rgba(255,210,0, 0.85);
+        box-shadow: inset 0 0 18px rgba(255,210,0, 0.25);
+      }
+    }
+
+    /* ─────────────────────────────────────────
+       EFEITO 7 — SPARKLES (partículas nos cantos)
+    ───────────────────────────────────────── */
+    .fx-sparkle {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .fx-sparkle span {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,215,0, 0.9);
+      box-shadow: 0 0 6px 2px rgba(255,215,0, 0.6);
+      animation: sparkle 3s ease-in-out infinite;
+    }
+    .fx-sparkle span:nth-child(1) { top:0;    left:0;    animation-delay:0.0s; }
+    .fx-sparkle span:nth-child(2) { top:0;    right:0;   animation-delay:0.6s; }
+    .fx-sparkle span:nth-child(3) { bottom:0; left:0;    animation-delay:1.2s; }
+    .fx-sparkle span:nth-child(4) { bottom:0; right:0;   animation-delay:1.8s; }
+    .fx-sparkle span:nth-child(5) { top:50%;  left:-2px; transform:translateY(-50%); animation-delay:2.4s; }
+    .fx-sparkle span:nth-child(6) { top:50%;  right:-2px;transform:translateY(-50%); animation-delay:0.9s; }
+    @keyframes sparkle {
+      0%,100% { transform:scale(1);   opacity:0.8; }
+      50%     { transform:scale(1.8); opacity:1.0; }
+      75%     { transform:scale(0.4); opacity:0.3; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Imagem da página inteira hospedada no GitHub -->
-  <img
-    class="page-image"
-    src="https://github.com/mentealfa/Mente-Inabal-vel/blob/main/Site%20Mente%20Inabal%C3%A1vel.png?raw=true"
-    alt="Mente Inabalável"
-  </a>
+  <div class="page-wrapper" id="wrapper">
+
+    <!-- Imagem da página inteira hospedada no GitHub -->
+    <img
+      class="page-image"
+      src="https://github.com/mentealfa/Mente-Inabal-vel/blob/main/Site%20Mente%20Inabal%C3%A1vel.png?raw=true"
+      alt="Mente Inabalável"
+    />
+
+    <!-- ═══════════════════════════════════════════════════
+         BOTÃO 1 — "QUERO TRANSFORMAR MINHA MENTE"
+         ↓ Ajuste top/left/width/height em % para encaixar
+    ═══════════════════════════════════════════════════ -->
+    <div class="btn-overlay"
+         data-label="B1: QUERO TRANSFORMAR"
+         style="top:12.8%; left:13%; width:24%; height:2.4%; border-radius:50px;">
+      <div class="fx-shimmer"></div>
+      <div class="fx-glow"></div>
+      <div class="fx-ring"></div>
+      <div class="fx-ring"></div>
+      <div class="fx-ring"></div>
+      <div class="fx-sparkle">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         BOTÃO 2 — "VER MÓDULOS"
+    ═══════════════════════════════════════════════════ -->
+    <div class="btn-overlay"
+         data-label="B2: VER MÓDULOS"
+         style="top:12.8%; left:38.5%; width:11.5%; height:2.4%; border-radius:50px;">
+      <div class="fx-border"></div>
+      <div class="fx-shimmer" style="animation-delay:1.2s;"></div>
+      <div class="fx-glow"    style="animation-delay:0.4s;"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         BOTÃO 3 — "DEPOIMENTO DOS ALUNOS"
+    ═══════════════════════════════════════════════════ -->
+    <div class="btn-overlay"
+         data-label="B3: DEPOIMENTO DOS ALUNOS"
+         style="top:71.5%; left:50%; transform:translateX(-50%); width:30%; height:2.0%; border-radius:50px;">
+      <div class="fx-shimmer" style="animation-delay:0.5s;"></div>
+      <div class="fx-glow-orange"></div>
+      <div class="fx-ring-orange"></div>
+      <div class="fx-ring-orange"></div>
+      <div class="fx-sparkle">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         BOTÃO 4 — CTA DA OFERTA
+    ═══════════════════════════════════════════════════ -->
+    <div class="btn-overlay"
+         data-label="B4: CTA OFERTA"
+         style="top:85.0%; left:50%; transform:translateX(-50%); width:40%; height:2.2%; border-radius:50px;">
+      <div class="fx-shimmer"></div>
+      <div class="fx-glow-orange"></div>
+      <div class="fx-ring-orange"></div>
+      <div class="fx-ring-orange"></div>
+      <div class="fx-ring-orange"></div>
+      <div class="fx-sparkle">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+         BOTÃO 5 — CTA FINAL (perto da garantia)
+    ═══════════════════════════════════════════════════ -->
+    <div class="btn-overlay"
+         data-label="B5: CTA FINAL"
+         style="top:93.2%; left:50%; transform:translateX(-50%); width:40%; height:2.2%; border-radius:50px;">
+      <div class="fx-shimmer" style="animation-delay:0.7s;"></div>
+      <div class="fx-glow-orange"></div>
+      <div class="fx-ring-orange"></div>
+      <div class="fx-ring-orange"></div>
+      <div class="fx-ring-orange"></div>
+      <div class="fx-sparkle">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+  </div><!-- /page-wrapper -->
+
+  <script>
+    // ── MODO DEBUG ──────────────────────────────────────
+    // Adicione ?debug na URL para ver os contornos:
+    // Ex: mentealfa.github.io/Mente-Inabal-vel/?debug
+    if (window.location.search.includes('debug')) {
+      document.getElementById('wrapper').classList.add('debug');
+    }
+
+    // ── HOVER: acelera efeitos ao passar o mouse ────────
+    document.querySelectorAll('.btn-overlay').forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        btn.querySelectorAll('.fx-glow, .fx-glow-orange')
+           .forEach(el => el.style.animationDuration = '0.8s');
+        btn.querySelectorAll('.fx-shimmer')
+           .forEach(el => el.style.animationDuration = '1.2s');
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.querySelectorAll('.fx-glow, .fx-glow-orange')
+           .forEach(el => el.style.animationDuration = '');
+        btn.querySelectorAll('.fx-shimmer')
+           .forEach(el => el.style.animationDuration = '');
+      });
+    });
+  </script>
 
 </body>
 </html>
